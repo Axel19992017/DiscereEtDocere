@@ -1,11 +1,8 @@
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DED - Inicio</title>
-</head>
-<body>
+    {% extends "plantilla.html" %}
+    {% block title%}
+        Inicio
+    {% endblock %}
+    {% block main %}
         <header>
             <h2>
                 Discere et Docere - Un lugar donde enseña y aprendes
@@ -40,5 +37,4 @@
                 Ante cualquier queja, duda, sugerencia escribeme al correo agarciadarce@gmail.com
             </p>
         </section>
-</body>
-</html>
+    {% endblock %}

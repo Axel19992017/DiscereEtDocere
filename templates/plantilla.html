@@ -1,0 +1,28 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <title>DED - {% block title %}{% endblock %}</title>
+</head>
+<body>
+    <nav class="nav-justified">
+        <ul>
+            <li>Inicio</li>
+            <li>Foro</li>
+            <li>Descargas</li>
+            <li>Soporte</li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Hola mundo</h1>
+            </div>
+        </div>
+        {% block main %} {% endblock %}
+    </div>
+    <script src="../js/jquery-3.4.0.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+</body>
+</html>
