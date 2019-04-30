@@ -1,40 +1,11 @@
-    {% extends "plantilla.html" %}
-    {% block title%}
-        Inicio
-    {% endblock %}
-    {% block main %}
-        <header>
-            <h2>
-                Discere et Docere - Un lugar donde enseña y aprendes
-            </h2>
-            <nav>
-                <ul>
-                    <li><a href="#Historia">Historia</a></li>
-                    <li><a href="#Desarrollo">Desarrollo</a></li>
-                    <li><a href="foro.html">Foro</a></li>
-                    <li><a href="descargas.html">Descargas</a></li>
-                    <li><a href="#ContactoSoporte">Contacto y Soporte</a></li>
-                </ul>
-            </nav>
-        </header>
-        <section id="Historia">
-            <h2>
-                Historia
-            </h2>
-            <p>
-                Esta página inicio con la idea de dar un lugar a aquellas personas que necesitan una ayuda en su aprendizaje en todo lo referente a la rama de las matématicas, su fundador es Axel Eleazar García Darce, estudiante de Ingeniería de Sistemas en la Universidad NAcional de Ingeniería de Nicaragua y presentó este proyecto como trabajo final para la finalización del curso CS50 que llevó en los años 2018-2019.
-            </p>
-        </section>
-        <section id="Desarrollo">
-            <h2>Desarrollo</h2>
-            <p>
-                Este proyecto consta de dos partes, una comunidad que se basará en la ayuda mutua frente a diversos temas de las matématicas, y una parte donde se encontrará sitios web u enlaces de descarga para obtener libros confiables, esta última parte también se hará valer por los aportes de los usuarios registrados.
-            </p>
-        </section>
-        <section id="ContactoSoporte">
-            <h2>Contacto y Soporte</h2>
-            <p>
-                Ante cualquier queja, duda, sugerencia escribeme al correo agarciadarce@gmail.com
-            </p>
-        </section>
-    {% endblock %}
+{% extends "layout.html" %}
+{% block title %}
+    Inicio
+{% endblock %}
+{% block main %}
+    <div class="row">
+        <div class="col">
+            <h2>Hola mundo</h2>
+        </div>
+    </div>
+{% endblock %}
