@@ -25,7 +25,11 @@ def index():
     rows = cursor.fetchall()
     for row in rows:
         print(f"{row}")
-    return render_template("index.html",rows = rows,rol = '')
+    return render_template("index.html",rows = rows,rol = "")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

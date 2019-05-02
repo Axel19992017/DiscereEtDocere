@@ -34,13 +34,25 @@
                         Soporte y Contacto
                     </a>
                 </li>
-            {% if rol == '' %}
-
-            {% endif %}
-                <li class="">
-                    <a href="#">Registrar</a>
-                    <a href="#">Entrar</a>
+                {% if  rol == 'admin' or rol != '' %}
+                <li class="nav-item mr-3 ml-3">
+                    <a href="/" class="navbar-nav">
+                        <img src='{{ url_for('static', filename = 'img/salir.png')}}' width="30" height="30"
+                            class="d-inline-block align-top mr-1">
+                        Salir{{rol}}
+                    </a>
                 </li>
+                {% else %}
+                <li class="nav-item mr-3 ml-3">
+                    <a href="/login" class="navbar-nav">
+                        <img src='{{ url_for('static', filename = 'img/iniciarsesion.png')}}' width="30" height="30"
+                            class="d-inline-block align-top mr-1">
+                        Iniciar Sesión {{rol}}
+                    </a>
+                </li>
+
+                {% endif %}
+
             </ul>
         </div>
     </nav>
