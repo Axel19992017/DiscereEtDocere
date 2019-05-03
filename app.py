@@ -20,14 +20,27 @@ cursor = con.cursor()
 rol = ''
 error = ''
 # Funciones usadas con propositos de utilidad
-
 # Si existe un Usuario con ese alias (el alias es único)
 def siExisteUsuario(alias, pase):
-    cursor.execute(f"select count(*) as Vacio from Usuario where alias = '{alias}' and pase = '{pase}';")
+    if pase is None:
+        cursor.execute(f"select count(*) as Vacio from Usuario where alias = BINARY '{alias}';")
+        vacio = cursor.fetchone()
+        return vacio[0]
+    else:
+        cursor.execute(f"select count(*) as Vacio from Usuario where alias = BINARY '{alias}' and pase = BINARY '{pase}';")
+        vacio = cursor.fetchone()
+        return vacio[0]
+#Averiguar si un correo está registrado o ligado a un Usuario
+def siCorreoRegistrado(correo):
+    cursor.execute(f"select count(*) as Vacio from Usuario where email = BINARY '{correo}'")
     vacio = cursor.fetchone()
-    return vacio[0]
+    if vacio[0] == 1:
+        return True
+    else:
+        return False
+#Obtener un rol
 def getRol(alias):
-    cursor.execute(f"select rol from Usuario where alias = '{alias}'")
+    cursor.execute(f"select rol from Usuario where alias = BINARY '{alias}'")
     rol = cursor.fetchone()
     return rol[0]
 @app.route("/")
@@ -59,6 +72,29 @@ def inicioSesion():
 @app.route("/addUsuario")
 def addUsuario():
     return render_template("registrarUsuario.html")
+
+@app.route("/addingUsuario", methods=['POST'])
+def addingUsuario():
+    nombres = request.form['nombres']
+    apellidos = request.form['apellidos']
+    correo = request.form['correo']
+    gradoAcad = request.form['gradoAcad']
+    alias = request.form['alias']
+    pase = request.form['pass']
+    paseConf = request.form['passReenv']
+    errores = list()
+
+    if siExisteUsuario(alias,None) == 1:
+        errores.append('El usuario ya está en uso! :c')
+    if pase != paseConf:
+        errores.append("Las contraseñas no son iguales >:D")
+    if siCorreoRegistrado(correo):
+        errores.append('El correo ya pertenece a un usuario >:c')
+    if not errores:
+        return render_template("login.html")
+    else:
+        return render_template("registrarUsuario.html", errores = errores)
+    
 if __name__ == '__main__':
     app.run(debug=True)
 

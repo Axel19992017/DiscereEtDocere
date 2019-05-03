@@ -1,0 +1,74 @@
+{% extends "layout.html" %} {% block title %} Registrarse {% endblock %} {% block main %}
+<form action="/addingUsuario" method="post">
+    <div class="form-row m-3">
+        <div class="form-group col-4 col-md-3">
+            <label for="nombres">Nombres: </label>
+        </div>
+        <div class="form-group col-8 col-md-3">
+            <input type="text" name="nombres" class="form-control" id="nombres" maxlength="45" required>
+        </div>
+
+        <div class="form-group col-4 col-md-3">
+            <label for="apellidos">Apellidos: </label>
+        </div>
+        <div class="form-group col-8 col-md-3">
+            <input type="text" name="apellidos" class="form-control" id="apellidos" maxlength="45" required>
+        </div>
+    </div>
+    <div class="form-row m-3">
+        <div class="form-group col-5 col-md-3">
+            <label for="correo">Correo electronico: </label>
+        </div>
+        <div class="form-group col-7 col-md-3">
+            <input type="email" name="correo" id="correo" class="form-control" maxlength="45" required placeholder="usuario@ejemplo.com">
+        </div>
+        <div class="form-group col-5 col-md-3">
+            <label for="gradoAcad">Nivel de Estudios Actual: </label>
+        </div>
+        <div class="form-group col-7 col-md-3">
+            <select name="gradoAcad" id="gradoAcad" class="form-control">
+        <option value="Primaria">1. Primaria</option>
+        <option value="Secundaria">2. Secundaria</option>
+        <option value="Universidad">3. Universidad</option>
+        <option value="Técnico">4. Técnico</option>
+        <option value="Otro" selected>5. Otro</option>
+      </select>
+        </div>
+    </div>
+    <div class="form-row m-3">
+        <div class="form-group col-6 col-md-2 ">
+            <label for="alias">Usuario: </label>
+        </div>
+        <div class="form-group col-6 col-md-2 ">
+            <input type="text" name="alias" id="alias" class="form-control" required maxlength="45">
+        </div>
+        <div class="form-group col-6 col-md-2 ">
+            <label for="alias">Contraseña: </label>
+        </div>
+        <div class="form-group col-6 col-md-2 ">
+            <input type="password" name="pass" id="pass" class="form-control" required maxlength="45">
+        </div>
+        <div class="form-group col-6 col-md-2 ">
+            <label for="alias">Confirme contraseña: </label>
+        </div>
+        <div class="form-group col-6 col-md-2 ">
+            <input type="password" name="passReenv" id="passReenv" class="form-control" required maxlength="45">
+        </div>
+    </div>
+    <div class="form-row m-3 justify-content-sm-center">
+        <div class="form-group col-12 col-md-6">
+            <input type="submit" value="Registrarse" class="btn btn-outline-primary form-control">
+        </div>
+    </div>
+</form>
+{% for error in errores %}
+<div class="row justify-content-md-center m-1">
+    <div class="alert alert-danger col-12 col-md-6" id="alerta">
+        {{error|e}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+      <span>&times;</span>
+    </button>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
