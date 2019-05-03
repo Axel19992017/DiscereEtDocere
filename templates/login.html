@@ -2,25 +2,50 @@
 {% block title %}Inicio de Sesión{% endblock %}
 
 {% block main %}
+<form action="/inicioSesion" method="POST">
+    <div class="row justify-content-md-center m-3">
+        <div class="col-auto">
+            <h3>Ingrese los datos: </h3>
+        </div>
+    </div>
+    <div class="row justify-content-md-center m-3">
+        <div class="col col-md-4 col-lg-2">
+            <label for="usuario">Usuario: </label>
+        </div>
+        <div class="col col-md-4 col-lg-2">
+            <input type="text" name="usuario" id="usuario" autocomplete="off">
+        </div>
+    </div>
+    <div class="row justify-content-md-center m-3">
+        <div class="col col-md-4 col-lg-2">
+            <label for="pase">Contraseña: </label>
+        </div>
+        <div class="col col-md-4 col-lg-2">
+            <input type="password" name="pase" id="pase">
+        </div>
+    </div>
+    <div class="row justify-content-md-center m-3">
+        <div class="col col-md-6 col-md-4">
+            <button class="btn btn-outline-primary btn-block">
+                Acceder
+            </button>
+        </div>
+    </div>
+</form>
+{% if error %}
 <div class="row justify-content-md-center m-3">
-    <div class="col col-md-8 col-lg-4">
-        <h3>Ingrese los datos: </h3>
+    <div class="alert alert-danger col-12 col-md-6" id="alerta">
+        {{error}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span>&times;</span>
+        </button>
     </div>
 </div>
-<div class="row justify-content-md-center m-3">
-    <div class="col col-md-4 col-lg-2">
-        <label for="usuario">Usuario: </label>
-    </div>
-    <div class="col col-md-4 col-lg-2">
-        <input type="text" name="usuario" id="usuario" autocomplete="off">
-    </div>
-</div>
-<div class="row justify-content-md-center m-3">
-    <div class="col col-md-4 col-lg-2">
-        <label for="pase">Contraseña: </label>
-    </div>
-    <div class="col col-md-4 col-lg-2">
-        <input type="password" name="pase" id="pase">
+{% endif %}
+<div class="row justify-content-sm-center ">
+    <div class="col-auto">
+        <a href="/addUsuario">No tienes cuenta?, Registrese!</a>
+        <a href="#">Olvido la contraseña?</a>
     </div>
 </div>
 {% endblock %}

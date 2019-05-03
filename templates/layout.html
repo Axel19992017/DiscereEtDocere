@@ -34,12 +34,36 @@
                         Soporte y Contacto
                     </a>
                 </li>
-                {% if  rol == 'admin' or rol != '' %}
+                <!--Si hay alguna cuenta ingresada o se está intentando registrar, se muestra la opción de salir, en caso contrario se muestra el inicio de sesión-->
+                {% if  rol == 'admin' or rol %}
+                <li class="nav-item mr-3 ml-3">
+                    <a href="/" class="navbar-nav">
+                        <img src='{{ url_for('static', filename = 'img/foro.png')}}' width="30" height="30"
+                            class="d-inline-block align-top mr-1">
+                        Foro
+                    </a>
+                </li>
+                <li class="nav-item mr-3 ml-3">
+                    <a href="/" class="navbar-nav">
+                        <img src='{{ url_for('static', filename = 'img/perfil.png')}}' width="30" height="30"
+                            class="d-inline-block align-top mr-1">
+                        Perfil
+                    </a>
+                </li>
+                    {% if rol == 'admin' %}
+                    <li class="nav-item mr-3 ml-3">
+                        <a href="/" class="navbar-nav">
+                            <img src='{{ url_for('static', filename = 'img/admin.png')}}' width="30" height="30"
+                                class="d-inline-block align-top mr-1">
+                            Administración
+                        </a>
+                    </li>    
+                    {% endif %}
                 <li class="nav-item mr-3 ml-3">
                     <a href="/" class="navbar-nav">
                         <img src='{{ url_for('static', filename = 'img/salir.png')}}' width="30" height="30"
                             class="d-inline-block align-top mr-1">
-                        Salir{{rol}}
+                        Salir
                     </a>
                 </li>
                 {% else %}
@@ -47,10 +71,9 @@
                     <a href="/login" class="navbar-nav">
                         <img src='{{ url_for('static', filename = 'img/iniciarsesion.png')}}' width="30" height="30"
                             class="d-inline-block align-top mr-1">
-                        Iniciar Sesión {{rol}}
+                        Iniciar Sesión
                     </a>
                 </li>
-
                 {% endif %}
 
             </ul>
