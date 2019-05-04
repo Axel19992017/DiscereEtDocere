@@ -42,6 +42,16 @@
     </div>
 </div>
 {% endif %}
+{% if mensaje %}
+<div class="row justify-content-md-center m-3">
+    <div class="alert alert-info col-12 col-md-6" id="mensaje">
+        {{mensaje}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span>&times;</span>
+        </button>
+    </div>
+</div>
+{% endif %}
 <div class="row justify-content-sm-center ">
     <div class="col-auto">
         <a href="/addUsuario">No tienes cuenta?, Registrese!</a>

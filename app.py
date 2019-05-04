@@ -6,7 +6,12 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flaskext.mysql import MySQL
 # Configure application
 app = Flask(__name__)
-
+"""
+    FALTA: AGREGAR ADMINISTRACIÓN
+    MOSTRAR IMAGENES
+    AGREGAR INICIO
+    AGREGAR FORO
+"""
 mysql = MySQL()
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_PORT'] = 3306
@@ -20,6 +25,20 @@ cursor = con.cursor()
 rol = ''
 error = ''
 # Funciones usadas con propositos de utilidad
+def getTemas(unidadSelec):
+    if unidadSelec is None:
+        cursor.execute('select U.nombre as Unidad, T.nombre, T.descripcion from Tema T inner join Unidad U on U.idUnidad = T.idUnidad;')
+    else:
+        cursor.callproc('getTemas',(unidadSelec))
+    return cursor.fetchall()
+# Obtener unidades agregadas a la base de datos
+def getUnidades():
+    cursor.execute('select * from Unidad')
+    return cursor.fetchall()
+#Agregar usuario a la base de datos
+def addUsuarioDB(nombres,apellidos,email,gradoAcad,alias,pase,foto):
+    cursor.callproc('addUsuario',(nombres,apellidos,gradoAcad,email,alias,pase,foto,'basic'))
+    cursor.connection.commit()
 # Si existe un Usuario con ese alias (el alias es único)
 def siExisteUsuario(alias, pase):
     if pase is None:
@@ -91,10 +110,15 @@ def addingUsuario():
     if siCorreoRegistrado(correo):
         errores.append('El correo ya pertenece a un usuario >:c')
     if not errores:
-        return render_template("login.html")
+        addUsuarioDB(nombres,apellidos,correo,gradoAcad,alias,pase,None)
+        return render_template("login.html", mensaje = "Usuario Registrado, ya puede ingresar")
     else:
         return render_template("registrarUsuario.html", errores = errores)
-    
+@app.route("/administrar")
+def administrar():
+    unidades = getUnidades()
+    temas = getTemas(None)
+    return render_template('administracion.html',unidades = unidades, temas = temas)
+
 if __name__ == '__main__':
     app.run(debug=True)
-

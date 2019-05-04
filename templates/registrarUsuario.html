@@ -20,19 +20,20 @@
             <label for="correo">Correo electronico: </label>
         </div>
         <div class="form-group col-7 col-md-3">
-            <input type="email" name="correo" id="correo" class="form-control" maxlength="45" required placeholder="usuario@ejemplo.com">
+            <input type="email" name="correo" id="correo" class="form-control" maxlength="45" required
+                placeholder="usuario@ejemplo.com">
         </div>
         <div class="form-group col-5 col-md-3">
             <label for="gradoAcad">Nivel de Estudios Actual: </label>
         </div>
         <div class="form-group col-7 col-md-3">
             <select name="gradoAcad" id="gradoAcad" class="form-control">
-        <option value="Primaria">1. Primaria</option>
-        <option value="Secundaria">2. Secundaria</option>
-        <option value="Universidad">3. Universidad</option>
-        <option value="Técnico">4. Técnico</option>
-        <option value="Otro" selected>5. Otro</option>
-      </select>
+                <option value="Primaria">1. Primaria</option>
+                <option value="Secundaria">2. Secundaria</option>
+                <option value="Universidad">3. Universidad</option>
+                <option value="Técnico">4. Técnico</option>
+                <option value="Otro" selected>5. Otro</option>
+            </select>
         </div>
     </div>
     <div class="form-row m-3">
@@ -66,8 +67,8 @@
     <div class="alert alert-danger col-12 col-md-6" id="alerta">
         {{error|e}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
-      <span>&times;</span>
-    </button>
+            <span>&times;</span>
+        </button>
     </div>
 </div>
 {% endfor %}

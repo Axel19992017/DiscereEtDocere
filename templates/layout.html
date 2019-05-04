@@ -37,7 +37,7 @@
                 <!--Si hay alguna cuenta ingresada o se está intentando registrar, se muestra la opción de salir, en caso contrario se muestra el inicio de sesión-->
                 {% if  rol == 'admin' or rol %}
                 <li class="nav-item mr-3 ml-3">
-                    <a href="/" class="navbar-nav">
+                    <a href="/foro" class="navbar-nav">
                         <img src='{{ url_for('static', filename = 'img/foro.png')}}' width="30" height="30"
                             class="d-inline-block align-top mr-1">
                         Foro
@@ -52,7 +52,7 @@
                 </li>
                     {% if rol == 'admin' %}
                     <li class="nav-item mr-3 ml-3">
-                        <a href="/" class="navbar-nav">
+                        <a href="/administrar" class="navbar-nav">
                             <img src='{{ url_for('static', filename = 'img/admin.png')}}' width="30" height="30"
                                 class="d-inline-block align-top mr-1">
                             Administración
