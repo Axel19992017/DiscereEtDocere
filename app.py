@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, make_response,json
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
@@ -27,7 +27,7 @@ error = ''
 # Funciones usadas con propositos de utilidad
 def getTemas(unidadSelec):
     if unidadSelec is None:
-        cursor.execute('select U.nombre as Unidad, T.nombre, T.descripcion from Tema T inner join Unidad U on U.idUnidad = T.idUnidad;')
+        cursor.execute('select T.idUnidad, T.idTema , T.nombre, T.descripcion from Tema T;')
     else:
         cursor.callproc('getTemas',(unidadSelec))
     return cursor.fetchall()
@@ -114,11 +114,28 @@ def addingUsuario():
         return render_template("login.html", mensaje = "Usuario Registrado, ya puede ingresar")
     else:
         return render_template("registrarUsuario.html", errores = errores)
-@app.route("/administrar")
-def administrar():
+@app.route("/foro")
+def foro():
     unidades = getUnidades()
     temas = getTemas(None)
-    return render_template('administracion.html',unidades = unidades, temas = temas)
+    return render_template('foro.html',unidades = unidades, temas = temas)
+
+@app.route("/getForos", methods=['GET'])
+def getForos(idTema):
+    cursor.execute(f"select * from Foro where idTema = {idTema}")
+    ResultSet = cursor.fetchall()
+    forosList = []
+    for foro in ResultSet:
+        foroDict = {
+            'idForo': foro[0],
+            'idTema': foro[1],
+            'idUsuario': foro[2],
+            'nombre': foro[3],
+            'descripcion': foro[4],
+            'horaCreacion': foro[6]
+        }
+        forosList.append(foroDict)
+    return json.dumps(forosList, sort_keys=True, indent=4)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5500)

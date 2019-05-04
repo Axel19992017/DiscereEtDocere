@@ -1,12 +1,71 @@
 {% extends "layout.html" %}
-{% block title %}
-    Foro
-{% endblock %}
+{% block title %}Foro{% endblock %}
 {% block main %}
-    <div class="row">
-        <div class="col-12">
-            
-        </div>
+<div class="form-row justify-content-md-center m-3">
+  <div class="form-group col-6 col-md-3">
+    <label for="unidad">Unidad Seleccionada: </label>
+  </div>
+  <div class="form-group col-6 col-md-3">
+    <select class="form-control" name="unidad" id="unidad"">
+      {% for unidad in unidades %}
+      <option value="{{unidad[0]}}">{{unidad[1]}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group col-6 col-md-3">
+    <label for="unidad">Temas de la Unidad: </label>
+  </div>
+  <div class="form-group col-6 col-md-3">
+    <select class="form-control" name="tema" id="tema">
+      <option value="">Seleccione una unidad</option>
+    </select>
+  </div>
+</div>
+<div class="form-row justify-content-md-center m-3">
+  <div class="form-group col-12 col-md-6">
+    <button type="submit" name="ver" id="ver" class="btn btn-outline-primary form-control">Ver Foros</button>
+  </div>
+</div>
+<div class="card border-primary">
+  <div class="card-body">
+    <h5 class="card-title">Tema del foro</h5>
+    <h6 class="card-subtitle m-2 text-muted">Elaborado por: </h6>
+    <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci quia pariatur deleniti, iure atque assumenda. Officia accusantium, dolor quis eum quidem quasi iste, obcaecati voluptate nostrum expedita vel totam laborum?</p>
+  </div>
+  <a href="#" class="card-footer bg-transparent text-right ">
+    <button class="btn btn-primary">Participar</button>
+  </a>
+</div>
+<script>
+  const Unidad = document.getElementById('unidad');
+  Unidad.addEventListener('change', cargarTemas);
+  const boton = document.getElementById('ver');
+  boton.addEventListener('click',cargarForos)
+  let optionTemas = document.getElementById('tema');
+  let temas = [
+  {%for tema in temas %} 
+  [{%for item in tema %}
+    '{{ item }}', 
+    {% endfor %}],
+  {% endfor %}];
+    //let temas = [{%for tema in temas %} [{%for item in tema %}'{{ item }}',{% endfor %}],{%endfor %}];
+  
+  //temas = [idUnidad, ideTema, tema. descripción]
+  function cargarForos() {
+    console.log();
+  }
+  function cargarTemas() {
+    var unidadSeleccionada = Unidad.value;
+    optionTemas.innerHTML = ''
+    for (var i = 0; i < temas.length; i++) {
+      if (temas[i][0] == unidadSeleccionada) {
 
-    </div>
+        let option = document.createElement('option');
+        option.value = temas[i][1]
+        option.textContent = temas[i][2]
+        optionTemas.appendChild(option)
+      }
+    }
+  }
+</script>
 {% endblock %}
