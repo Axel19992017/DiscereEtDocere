@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}Respuestas del Foro{% endblock %}
+{% block main %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{foro[3]}}</h5>
+            <h6 class="card-subtittle m-2 text-muted">
+                Elaborado por: {{foro[2]}}
+            </h6>
+            <p class="card-text">
+                {{foro[5]}}
+            </p>
+        </div>
+        <ul class="list-group">
+            {% for res in respuestas %}
+                <li>{{res[2],''</li>
+
+            {% endfor %}
+        </ul>
+        
+    </div>
+
+{% endblock %}
+
+
+
+

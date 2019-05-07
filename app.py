@@ -23,6 +23,7 @@ mysql.init_app(app)
 con = mysql.connect()
 cursor = con.cursor()
 rol = ''
+alias = ''
 error = ''
 # Funciones usadas con propositos de utilidad
 def getTemas(unidadSelec):
@@ -76,18 +77,20 @@ def login():
 
 @app.route("/inicioSesion", methods=['POST'])
 def inicioSesion():
-    usuario = request.form['usuario']
+    global alias
+    alias = request.form['usuario']
     pase = request.form['pase']
-    if not usuario or not pase:
+    if not alias or not pase:
         error = 'Datos ingresados incorrectamente'
         return render_template("login.html", error = error)
-    elif siExisteUsuario(usuario,pase) == 0:
+    elif siExisteUsuario(alias,pase) == 0:
         error = 'Usuario o contraseña incorrectos'
         return render_template("login.html", error = error)
     else:
+        
         global rol
-        rol = getRol(usuario)
-        return render_template("index.html",rol= rol)
+        rol = getRol(alias)
+        return render_template("index.html",rol= rol, alias = alias)
 
 @app.route("/addUsuario")
 def addUsuario():
@@ -119,7 +122,7 @@ def addingUsuario():
 def foro():
     unidades = getUnidades()
     temas = getTemas(None)
-    return render_template('foro.html',unidades = unidades, temas = temas,rol = rol )
+    return render_template('foro.html',unidades =unidades, temas =temas,rol =rol, alias = alias )
 
 @app.route("/getForos", methods=['GET'])
 def getForos():
@@ -138,6 +141,13 @@ def getForos():
         }
         forosList.append(foroDict)
     return json.dumps(forosList, sort_keys=True, indent=4)
-
+@app.route('/responderForos', methods=['GET'])
+def responderForos():
+    idForo = request.args.get('idForo')
+    cursor.execute(f"select RF.idRespuestaForo,U.alias , RF.contenido, RF.archivo, RF.horaResp from RespuestaForo RF inner join Usuario U on U.idUsuario = RF.idUsuario where idForo={idForo};")
+    respuestas = cursor.fetchall();
+    cursor.execute(f"select F.idForo, T.nombre as TemaUnidad, U.alias, F.nombre as TemaForo, F.descripcion, F.archivo, F.horaCreacion from Foro F inner join Tema T on T.idTema=F.idTema inner join Usuario U on U.idUsuario = F.idUsuario where F.idForo = {idForo};")
+    foro = cursor.fetchone()
+    return render_template('respuestas.html',alias = alias,rol =rol,foro = foro, respuestas = respuestas)
 if __name__ == '__main__':
     app.run(debug=True, port=5500)

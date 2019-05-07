@@ -8,7 +8,7 @@
   <div class="form-group col-6 col-md-3">
     <select class="form-control" name="unidad" id="unidad"">
       {% for unidad in unidades %}
-      <option value=" {{unidad[0]}}">{{unidad[1]}}</option>
+      <option value="{{unidad[0]}}">{{unidad[1]}}</option>
       {% endfor %}
     </select>
   </div>
@@ -44,6 +44,7 @@
   //let temas = [{%for tema in temas %} [{%for item in tema %}'{{ item }}',{% endfor %}],{%endfor %}];
 
   //temas = [idUnidad, ideTema, tema. descripción]
+  
   function cargarForos() {
     var xmlHTTP = new XMLHttpRequest();
     var url = "/getForos?idTema=" + optionTemas.value + ""
@@ -86,12 +87,11 @@
         pText.setAttribute('id', 'pText' + i + '')
         pText.textContent = res[i].descripcion
         var aButton = document.createElement('a')
-        aButton.setAttribute('href', '#')
+        aButton.setAttribute('href', '/responderForo?idForo='+res[i].idForo)
         aButton.setAttribute('class', 'card-footer bg-transparent text-right')
         var Bbutton = document.createElement('button')
         Bbutton.setAttribute('class', 'btn btn-primary')
         Bbutton.textContent = 'Participar'
-
         aButton.appendChild(Bbutton)
 
         divBody.appendChild(hTitle)
@@ -105,13 +105,14 @@
       }
     }
   }
-
   function cargarTemas() {
     var unidadSeleccionada = Unidad.value;
     optionTemas.innerHTML = ''
     for (var i = 0; i < temas.length; i++) {
-      if (temas[i][0] == unidadSeleccionada) {
+      console.log(unidadSeleccionada)
+      console.log(temas[i][0])
 
+      if (temas[i][0] == unidadSeleccionada) {
         let option = document.createElement('option');
         option.value = temas[i][1]
         option.textContent = temas[i][2]
