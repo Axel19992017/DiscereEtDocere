@@ -85,6 +85,7 @@ def inicioSesion():
         error = 'Usuario o contraseña incorrectos'
         return render_template("login.html", error = error)
     else:
+        global rol
         rol = getRol(usuario)
         return render_template("index.html",rol= rol)
 
@@ -118,19 +119,20 @@ def addingUsuario():
 def foro():
     unidades = getUnidades()
     temas = getTemas(None)
-    return render_template('foro.html',unidades = unidades, temas = temas)
+    return render_template('foro.html',unidades = unidades, temas = temas,rol = rol )
 
 @app.route("/getForos", methods=['GET'])
-def getForos(idTema):
-    cursor.execute(f"select * from Foro where idTema = {idTema}")
+def getForos():
+    idTema = request.args.get('idTema')
+    cursor.execute(f"select F.idForo, T.nombre as TemaUnidad, U.alias, F.nombre as TemaForo, F.descripcion, F.archivo, F.horaCreacion from Foro F inner join Tema T on T.idTema=F.idTema inner join Usuario U on U.idUsuario = F.idUsuario where F.idTema = {idTema};")
     ResultSet = cursor.fetchall()
     forosList = []
     for foro in ResultSet:
         foroDict = {
             'idForo': foro[0],
-            'idTema': foro[1],
-            'idUsuario': foro[2],
-            'nombre': foro[3],
+            'TemaUnidad': foro[1],
+            'alias': foro[2],
+            'TemaForo': foro[3],
             'descripcion': foro[4],
             'horaCreacion': foro[6]
         }

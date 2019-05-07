@@ -8,7 +8,7 @@
   <div class="form-group col-6 col-md-3">
     <select class="form-control" name="unidad" id="unidad"">
       {% for unidad in unidades %}
-      <option value="{{unidad[0]}}">{{unidad[1]}}</option>
+      <option value=" {{unidad[0]}}">{{unidad[1]}}</option>
       {% endfor %}
     </select>
   </div>
@@ -26,21 +26,14 @@
     <button type="submit" name="ver" id="ver" class="btn btn-outline-primary form-control">Ver Foros</button>
   </div>
 </div>
-<div class="card border-primary">
-  <div class="card-body">
-    <h5 class="card-title">Tema del foro</h5>
-    <h6 class="card-subtitle m-2 text-muted">Elaborado por: </h6>
-    <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci quia pariatur deleniti, iure atque assumenda. Officia accusantium, dolor quis eum quidem quasi iste, obcaecati voluptate nostrum expedita vel totam laborum?</p>
-  </div>
-  <a href="#" class="card-footer bg-transparent text-right ">
-    <button class="btn btn-primary">Participar</button>
-  </a>
+<div id="foros">
+
 </div>
 <script>
   const Unidad = document.getElementById('unidad');
   Unidad.addEventListener('change', cargarTemas);
   const boton = document.getElementById('ver');
-  boton.addEventListener('click',cargarForos)
+  boton.addEventListener('click', cargarForos)
   let optionTemas = document.getElementById('tema');
   let temas = [
   {%for tema in temas %} 
@@ -48,12 +41,71 @@
     '{{ item }}', 
     {% endfor %}],
   {% endfor %}];
-    //let temas = [{%for tema in temas %} [{%for item in tema %}'{{ item }}',{% endfor %}],{%endfor %}];
-  
+  //let temas = [{%for tema in temas %} [{%for item in tema %}'{{ item }}',{% endfor %}],{%endfor %}];
+
   //temas = [idUnidad, ideTema, tema. descripción]
   function cargarForos() {
+    var xmlHTTP = new XMLHttpRequest();
+    var url = "/getForos?idTema=" + optionTemas.value + ""
+    xmlHTTP.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var res = JSON.parse(this.responseText)
+        addForos(res);
+        console.log(res)
+      }
+    }
+    xmlHTTP.open("GET", url, true);
+    xmlHTTP.send();
     console.log();
   }
+
+  function addForos(res) {
+    if (res.length == 0) {
+      var res =
+        '<div class="alert alert-danger col-12 col" id="alerta">No hay foros que mostrar<button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span>&times;</span></button></div>'
+
+      document.getElementById('foros').innerHTML = res
+    } else {
+      document.getElementById('foros').innerHTML = ''
+      for (var i = 0; i < res.length; i++) {
+        var divPrinc = document.createElement('div');
+        divPrinc.setAttribute('class', 'card border-primary m-3')
+        divPrinc.setAttribute('id', 'divPrinc' + i + '')
+        var divBody = document.createElement('div')
+        divBody.setAttribute('class', 'card-body')
+        divBody.setAttribute('id', 'divBody' + i + '')
+        var hTitle = document.createElement('h5')
+        hTitle.setAttribute('id', 'hTitle' + i + '')
+        hTitle.setAttribute('class', 'card-title')
+        hTitle.textContent = res[i].TemaForo
+        var hSubtitle = document.createElement('h6')
+        hSubtitle.setAttribute('class', 'card-subtitule m-2 text-muted')
+        hSubtitle.textContent = 'Elaborado por: ' + res[i].alias
+        var pText = document.createElement('p')
+        pText.setAttribute('class', 'card-text')
+        pText.setAttribute('id', 'pText' + i + '')
+        pText.textContent = res[i].descripcion
+        var aButton = document.createElement('a')
+        aButton.setAttribute('href', '#')
+        aButton.setAttribute('class', 'card-footer bg-transparent text-right')
+        var Bbutton = document.createElement('button')
+        Bbutton.setAttribute('class', 'btn btn-primary')
+        Bbutton.textContent = 'Participar'
+
+        aButton.appendChild(Bbutton)
+
+        divBody.appendChild(hTitle)
+        divBody.appendChild(hSubtitle)
+        divBody.appendChild(pText)
+
+        divPrinc.appendChild(divBody)
+        divPrinc.appendChild(aButton)
+
+        document.getElementById('foros').appendChild(divPrinc)
+      }
+    }
+  }
+
   function cargarTemas() {
     var unidadSeleccionada = Unidad.value;
     optionTemas.innerHTML = ''
