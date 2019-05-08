@@ -2,27 +2,50 @@
 
 {% block title %}Respuestas del Foro{% endblock %}
 {% block main %}
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{{foro[3]}}</h5>
-            <h6 class="card-subtittle m-2 text-muted">
-                Elaborado por: {{foro[2]}}
-            </h6>
-            <p class="card-text">
-                {{foro[5]}}
-            </p>
-        </div>
-        <ul class="list-group">
-            {% for res in respuestas %}
-                <li>{{res[2],''</li>
+<div class="card m-3">
+    <div class="card-body">
+        <h5 class="card-title">{{foro[3]}}</h5>
+        <h6 class="card-subtittle text-muted">
+            Elaborado por: {{foro[2]}}
+        </h6>
+        <p class="card-text">
+            {{foro[4]}}
+        </p>
+        <p class="text-muted">
+            Fecha de posteo: {{foro[6]}}
+        </p>
 
-            {% endfor %}
-        </ul>
-        
     </div>
+    <ul class="list-group list-group-flush">
 
+        {% for res in respuestas %}
+        <li class="list-group-item">
+            <p>
+                {{res[2]}}
+            </p>
+            <p class="text-muted">
+                {{res[1]}} - {{res[4]}}
+            </p>
+
+        </li>
+        {% endfor %}
+        <div class="card-body">
+            <textarea class="form-control" maxlength="500" name="responder" id="responder" rows="1"></textarea>
+            <button type="button" class="btn btn-primary form-control" id="btnResponder">Responder</button>
+        </div>
+    </ul>
+
+</div>
+<script>
+    var botonResponder = document.getElementById('btnResponder')
+    var contenido = document.getElementById('responder')
+    botonResponder.addEventListener('click', responder)
+
+    function responder() {
+        var xmlHTTP = new XMLHttpRequest();
+        var url = "/addRespuesta?idForo={{foro[0]}}&contenido='" + contenido.textContent + "'"
+        xmlHTTP.open("GET",url,true)
+        xmlHTTP.send()
+    }
+</script>
 {% endblock %}
-
-
-
-

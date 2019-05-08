@@ -3,30 +3,30 @@
 
 {% block main %}
 <form action="/inicioSesion" method="POST">
-    <div class="row justify-content-md-center m-3">
+    <div class="form-row justify-content-md-center m-3">
         <div class="col-auto">
-            <h3>Ingrese los datos: </h3>
+            <h3 class="form-text">Ingrese los datos: </h3>
         </div>
     </div>
-    <div class="row justify-content-md-center m-3">
-        <div class="col col-md-4 col-lg-2">
-            <label for="usuario">Usuario: </label>
+    <div class="form-row justify-content-md-center m-3">
+        <div class="form-group col col-md-4 col-lg-2">
+            <label class="form-text" for="usuario">Usuario: </label>
         </div>
-        <div class="col col-md-4 col-lg-2">
-            <input type="text" name="usuario" id="usuario" autocomplete="off">
-        </div>
-    </div>
-    <div class="row justify-content-md-center m-3">
-        <div class="col col-md-4 col-lg-2">
-            <label for="pase">Contraseña: </label>
-        </div>
-        <div class="col col-md-4 col-lg-2">
-            <input type="password" name="pase" id="pase">
+        <div class="form-group col col-md-4 col-lg-2">
+            <input class="form-control" type="text" name="usuario" id="usuario" autocomplete="off">
         </div>
     </div>
-    <div class="row justify-content-md-center m-3">
-        <div class="col col-md-6 col-md-4">
-            <button class="btn btn-outline-primary btn-block">
+    <div class="form-row justify-content-md-center m-3">
+        <div class="form-group col col-md-4 col-lg-2">
+            <label class="form-text" for="pase">Contraseña: </label>
+        </div>
+        <div class="form-group col col-md-4 col-lg-2">
+            <input class="form-control" type="password" name="pase" id="pase">
+        </div>
+    </div>
+    <div class="form-row justify-content-md-center m-3">
+        <div class="form-group col col-md-6 col-md-4">
+            <button class="btn btn-outline-primary btn-block form-control">
                 Acceder
             </button>
         </div>

@@ -68,7 +68,7 @@ def index():
     cursor.execute("select CONCAT(nombre,' ',apellido) as Nombre,alias,pase from Usuario;")
     print(cursor.rownumber)
     rows = cursor.fetchall()
-    return render_template("index.html",rows = rows,rol = rol)
+    return render_template("index.html",rows = rows,rol = "")
 
 @app.route("/login")
 def login():
@@ -141,7 +141,7 @@ def getForos():
         }
         forosList.append(foroDict)
     return json.dumps(forosList, sort_keys=True, indent=4)
-@app.route('/responderForos', methods=['GET'])
+@app.route('/responderForo', methods=['GET'])
 def responderForos():
     idForo = request.args.get('idForo')
     cursor.execute(f"select RF.idRespuestaForo,U.alias , RF.contenido, RF.archivo, RF.horaResp from RespuestaForo RF inner join Usuario U on U.idUsuario = RF.idUsuario where idForo={idForo};")
@@ -149,5 +149,14 @@ def responderForos():
     cursor.execute(f"select F.idForo, T.nombre as TemaUnidad, U.alias, F.nombre as TemaForo, F.descripcion, F.archivo, F.horaCreacion from Foro F inner join Tema T on T.idTema=F.idTema inner join Usuario U on U.idUsuario = F.idUsuario where F.idForo = {idForo};")
     foro = cursor.fetchone()
     return render_template('respuestas.html',alias = alias,rol =rol,foro = foro, respuestas = respuestas)
+@app.route('/addRespuesta', methods=['GET'])
+def addRespuesta():
+    idForo = request.args.get('idForo')
+    contenido = request.args.get('contenido')
+
+    print('LISTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
+    responderForos()
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5500)
