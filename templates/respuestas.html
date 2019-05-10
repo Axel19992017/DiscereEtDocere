@@ -2,7 +2,7 @@
 
 {% block title %}Respuestas del Foro{% endblock %}
 {% block main %}
-<div class="card m-3">
+<div class="card m-3" id="madre">
     <div class="card-body">
         <h5 class="card-title">{{foro[3]}}</h5>
         <h6 class="card-subtittle text-muted">
@@ -16,8 +16,7 @@
         </p>
 
     </div>
-    <ul class="list-group list-group-flush">
-
+    <ul class="list-group list-group-flush" id="listRespuestas">
         {% for res in respuestas %}
         <li class="list-group-item">
             <p>
@@ -26,12 +25,13 @@
             <p class="text-muted">
                 {{res[1]}} - {{res[4]}}
             </p>
-
         </li>
         {% endfor %}
         <div class="card-body">
             <textarea class="form-control" maxlength="500" name="responder" id="responder" rows="1"></textarea>
-            <button type="button" class="btn btn-primary form-control" id="btnResponder">Responder</button>
+            <div class="row justify-content-end">
+                <button type="button" class="btn btn-primary m-3" id="btnResponder">Responder</button>
+            </div>
         </div>
     </ul>
 
@@ -39,13 +39,23 @@
 <script>
     var botonResponder = document.getElementById('btnResponder')
     var contenido = document.getElementById('responder')
+    var divMadre = document.getElementById('madre')
     botonResponder.addEventListener('click', responder)
-
+    var prueba = '{{alias}}'
     function responder() {
-        var xmlHTTP = new XMLHttpRequest();
-        var url = "/addRespuesta?idForo={{foro[0]}}&contenido='" + contenido.textContent + "'"
-        xmlHTTP.open("GET",url,true)
-        xmlHTTP.send()
+        var alias = '{{alias}}'
+        if (alias != '') {
+            var url = "/addRespuesta?idForo={{foro[0]}}&contenido=" + contenido.value + "&alias={{alias}}"
+            $.get(url,function(res){
+                $("#listRespuestas").empty()
+                $("#listRespuestas").append(res)
+                var boton = '<div class="card-body"><textarea class="form-control" maxlength="500" name="responder" id="responder" rows="1"></textarea><div class="row justify-content-end"><button type="button" class="btn btn-primary m-3" id="btnResponder">Responder</button></div></div>'
+                $("#listRespuestas").append(boton)
+            })
+        } else {
+            alert("Registrese si quiere comentar")
+        }
+
     }
 </script>
 {% endblock %}

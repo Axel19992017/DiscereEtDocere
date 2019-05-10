@@ -25,7 +25,13 @@ cursor = con.cursor()
 rol = ''
 alias = ''
 error = ''
+foroS = tuple()
+respuestas = list()
 # Funciones usadas con propositos de utilidad
+def getidUsuario(alias):
+    cursor.execute(f"select idUsuario from Usuario where alias = BINARY '{alias}' ;")
+    res = cursor.fetchone()
+    return res[0]
 def getTemas(unidadSelec):
     if unidadSelec is None:
         cursor.execute('select T.idUnidad, T.idTema , T.nombre, T.descripcion from Tema T;')
@@ -143,20 +149,29 @@ def getForos():
     return json.dumps(forosList, sort_keys=True, indent=4)
 @app.route('/responderForo', methods=['GET'])
 def responderForos():
+    global respuestas
+    global foroS
     idForo = request.args.get('idForo')
-    cursor.execute(f"select RF.idRespuestaForo,U.alias , RF.contenido, RF.archivo, RF.horaResp from RespuestaForo RF inner join Usuario U on U.idUsuario = RF.idUsuario where idForo={idForo};")
-    respuestas = cursor.fetchall();
+    cursor.execute(f"select RF.idRespuestaForo,U.alias , RF.contenido, RF.archivo, RF.horaResp from RespuestaForo RF inner join Usuario U on U.idUsuario = RF.idUsuario where idForo={idForo} order by horaResp asc;")
+    respuestas = cursor.fetchall()
     cursor.execute(f"select F.idForo, T.nombre as TemaUnidad, U.alias, F.nombre as TemaForo, F.descripcion, F.archivo, F.horaCreacion from Foro F inner join Tema T on T.idTema=F.idTema inner join Usuario U on U.idUsuario = F.idUsuario where F.idForo = {idForo};")
-    foro = cursor.fetchone()
-    return render_template('respuestas.html',alias = alias,rol =rol,foro = foro, respuestas = respuestas)
+    foroS = cursor.fetchone()
+    return render_template('respuestas.html',alias = alias,rol =rol,foro = foroS, respuestas = respuestas)
+
 @app.route('/addRespuesta', methods=['GET'])
 def addRespuesta():
+    global respuestas
+    global foroS
     idForo = request.args.get('idForo')
     contenido = request.args.get('contenido')
-
-    print('LISTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
-    responderForos()
-
+    alias = request.args.get('alias')
+    idUsuario = getidUsuario(alias)
+    cursor.callproc('addRespuesta',(idForo,idUsuario,contenido,None))
+    cursor.connection.commit()
+    print('Respuesta agregada!!')
+    cursor.execute(f"select RF.idRespuestaForo,U.alias , RF.contenido, RF.archivo, RF.horaResp from RespuestaForo RF inner join Usuario U on U.idUsuario = RF.idUsuario where idForo={idForo} order by horaResp asc;")
+    respuestas = cursor.fetchall()
+    return render_template('respAdd.html',respuestas = respuestas)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5500)
