@@ -215,6 +215,13 @@ def perfil():
     res = cursor.fetchone()
     return render_template('perfil.html', rol = rol, alias = alias, datosUsuario = res)
 
+@app.route('/administrar')
+def administrar():
+    global alias
+    global rol
+    cursor.execute(f"select nombre,apellido,gradoAcademico,email,alias,rol from Usuario;")
+    res = cursor.fetchall()
+    return render_template('administracion.html', rol = rol, alias = alias, Usuarios = res)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5500)

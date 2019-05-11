@@ -12,7 +12,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a href="#" class="navbar-brand">DED</a>
+        <a href="/" class="navbar-brand">DED</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -34,8 +34,6 @@
                         Soporte y Contacto
                     </a>
                 </li>
-                <!--Si hay alguna cuenta ingresada o se está intentando registrar, se muestra la opción de salir, en caso contrario se muestra el inicio de sesión-->
-                {% if  rol == 'admin' or rol %}
                 <li class="nav-item mr-3 ml-3">
                     <a href="/foro" class="navbar-nav">
                         <img src='{{ url_for('static', filename = 'img/foro.png')}}' width="30" height="30"
@@ -43,6 +41,8 @@
                         Foro
                     </a>
                 </li>
+                <!--Si hay alguna cuenta ingresada o se está intentando registrar, se muestra la opción de salir, en caso contrario se muestra el inicio de sesión-->
+                {% if  rol == 'admin' or rol %}
                 <li class="nav-item mr-3 ml-3">
                     <a href="/perfil" class="navbar-nav">
                         <img src='{{ url_for('static', filename = 'img/perfil.png')}}' width="30" height="30"

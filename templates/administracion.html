@@ -5,7 +5,32 @@
 {% block main %}
     <div class="row">
         <div class="col-12">
-            <h2>SECCIÓN EN PROCESO DE CREACIÓN</h2>
+            <h3>SECCIÓN EN PROCESO DE CREACIÓN</h3>
         </div>
     </div>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Grado Acádemico</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Rol</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in Usuarios %}
+                <tr>
+                    <td>{{usuario[0]}}</td>
+                    <td>{{usuario[1]}}</td>
+                    <td>{{usuario[2]}}</td>
+                    <td>{{usuario[4]}}</td>
+                    <td>{{usuario[3]}}</td>
+                    <td>{{usuario[5]}}</td>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
 {% endblock %}
