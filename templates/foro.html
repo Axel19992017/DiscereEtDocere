@@ -22,27 +22,79 @@
   </div>
 </div>
 <div class="form-row justify-content-md-center m-3">
-  <div class="form-group col-12 col-md-6">
+  <div class="form-group col-6 col-md-3">
     <button type="submit" name="ver" id="ver" class="btn btn-outline-primary form-control">Ver Foros</button>
+  </div>
+  <div class="form-group col-6 col-md-3">
+    <button id="addForo" class="btn btn-outline-secondary form-control" data-toggle="modal" data-target="#modalForo">Agregar Foro</button>
+    
   </div>
 </div>
 <div id="foros">
 
 </div>
+<!--MODAL-->
+<div class="modal fade" id="modalForo" tabindex="-1" role="dialog" aria-labelledby="modalAgregarForo"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Agregar Foro
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <label for="temaForo">Tema del Foro: </label>
+          </div>
+          <div class="col-12 col-md-6">
+            <input type="text" name="temaForo" id="temaForo" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <label for="contenidoForoN">Descripción: </label>
+          </div>
+          <div class="col-12">
+            <textarea name="contenidoForoN" id="contenidoForoN" cols="30" rows="10" class="form-control" maxlength="500"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="agregar" data-dismiss="modal">Agregar Nuevo Foro</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
   const Unidad = document.getElementById('unidad');
   Unidad.addEventListener('change', cargarTemas);
+  Unidad.addEventListener('onload', cargarTemas);
+
   const boton = document.getElementById('ver');
   boton.addEventListener('click', cargarForos)
   let optionTemas = document.getElementById('tema');
+  let btnAddForo = document.getElementById('agregar');
+  btnAddForo.addEventListener('click',agregarForo);
   let temas = [
   {%for tema in temas %} 
   [{%for item in tema %}
-    '{{ item }}', 
+    '{{ item }}',
     {% endfor %}],
   {% endfor %}];
-  //let temas = [{%for tema in temas %} [{%for item in tema %}'{{ item }}',{% endfor %}],{%endfor %}];
 
+ /* let temas = [
+  {%for tema in temas %} 
+  [{%for item in tema %}
+    '{{ item }}',
+    {% endfor %}],
+  {% endfor %}];
+*/
   //temas = [idUnidad, ideTema, tema. descripción]
   
   function cargarForos() {
@@ -109,9 +161,6 @@
     var unidadSeleccionada = Unidad.value;
     optionTemas.innerHTML = ''
     for (var i = 0; i < temas.length; i++) {
-      console.log(unidadSeleccionada)
-      console.log(temas[i][0])
-
       if (temas[i][0] == unidadSeleccionada) {
         let option = document.createElement('option');
         option.value = temas[i][1]
@@ -119,6 +168,26 @@
         optionTemas.appendChild(option)
       }
     }
+  }
+  function agregarForo(){
+	if('{{alias}}' != ''){
+		var elementoNombreForo = document.getElementById('temaForo')
+		var nombreForo = elementoNombreForo.value
+		var elementoContenidoForo = document.getElementById('contenidoForoN')
+		var contenidoForo = elementoContenidoForo.value
+		var tema = optionTemas.value
+		var url = "/addForo?idTema="+tema+"&alias={{alias}}&nombre="+nombreForo+"&contenido="+contenidoForo
+		$.get(url,function(res){
+			if(res == '202'){
+				alert("Foro Agregado!!")
+			}else{
+				alert("ya valistes men, sorry")
+			}
+		})
+	}
+	else{
+		alert("Tienes que registrarte!!")
+	}
   }
 </script>
 {% endblock %}

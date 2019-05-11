@@ -172,6 +172,16 @@ def addRespuesta():
     cursor.execute(f"select RF.idRespuestaForo,U.alias , RF.contenido, RF.archivo, RF.horaResp from RespuestaForo RF inner join Usuario U on U.idUsuario = RF.idUsuario where idForo={idForo} order by horaResp asc;")
     respuestas = cursor.fetchall()
     return render_template('respAdd.html',respuestas = respuestas)
+@app.route('/addForo', methods=['GET'])
+def addForo():
+    idTema = request.args.get('idTema')
+    alias = request.args.get('alias')
+    idUsuario = getidUsuario(alias)
+    nombre = request.args.get('nombre')
+    contenido = request.args.get('contenido')
+    cursor.callproc('addForo',(idTema,idUsuario,nombre,contenido,None))
+    cursor.connection.commit()
+    return '202'
 
 if __name__ == '__main__':
     app.run(debug=True, port=5500)
