@@ -4,8 +4,10 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
 from flaskext.mysql import MySQL
+from flask_mail import Message,Mail
 # Configure application
 app = Flask(__name__)
+mail = Mail(app)
 """
     FALTA: AGREGAR ADMINISTRACIÓN
     MOSTRAR IMAGENES
@@ -81,6 +83,27 @@ def login():
     print(f'El rol es: ' + rol)
     return render_template("login.html",error = "")
 
+@app.route("/salir")
+def salir():
+    global rol
+    global alias
+    rol= ""
+    alias = ""
+    return render_template("index.html",rol= rol, alias = alias)
+
+@app.route("/contacto")
+def contacto():
+    return render_template("contacto.html", rol = rol, alias = alias)
+
+@app.route("/enviarMail", methods=['GET'])
+def enviarMail():
+    global alias
+    contenido = request.args.get("mensaje")
+    correo = alias + "@ded.com"
+    msg  =  Message(contenido,sender = correo ,recipients = ["agarciadarce@gmail.com"])
+    mail.send(msg)
+    return "Mensaje Enviado"
+
 @app.route("/inicioSesion", methods=['POST'])
 def inicioSesion():
     global alias
@@ -93,11 +116,9 @@ def inicioSesion():
         error = 'Usuario o contraseña incorrectos'
         return render_template("login.html", error = error)
     else:
-        
         global rol
         rol = getRol(alias)
         return render_template("index.html",rol= rol, alias = alias)
-
 @app.route("/addUsuario")
 def addUsuario():
     return render_template("registrarUsuario.html")

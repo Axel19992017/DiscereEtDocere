@@ -28,7 +28,7 @@
                 </li>
                 {% block navbar %}{% endblock %}
                 <li class="nav-item mr-3 ml-3">
-                    <a href="#" class="navbar-nav">
+                    <a href="/contacto" class="navbar-nav">
                         <img src='{{ url_for('static', filename = 'img/soporte.png')}}' width="30" height="30"
                             class="d-inline-block align-top mr-1">
                         Soporte y Contacto
@@ -60,10 +60,10 @@
                 </li>
                 {% endif %}
                 <li class="nav-item mr-3 ml-3">
-                    <a href="/" class="navbar-nav">
+                    <a href="/salir" class="navbar-nav">
                         <img src='{{ url_for('static', filename = 'img/salir.png')}}' width="30" height="30"
                             class="d-inline-block align-top mr-1">
-                        Salir
+                        Salir (Entrado como {{alias}})
                     </a>
                 </li>
                 {% else %}

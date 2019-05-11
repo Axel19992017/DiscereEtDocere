@@ -170,7 +170,7 @@
     }
   }
   function agregarForo(){
-	if('{{alias}}' != ''){
+	if('{{alias}}' != '' && optionTemas.value != ''){
 		var elementoNombreForo = document.getElementById('temaForo')
 		var nombreForo = elementoNombreForo.value
 		var elementoContenidoForo = document.getElementById('contenidoForoN')
@@ -186,7 +186,7 @@
 		})
 	}
 	else{
-		alert("Tienes que registrarte!!")
+		alert("Posibles Errores: 1. Inicio de sesión 2. Seleccionar un tema")
 	}
   }
 </script>
