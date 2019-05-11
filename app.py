@@ -74,7 +74,7 @@ def index():
     cursor.execute("select CONCAT(nombre,' ',apellido) as Nombre,alias,pase from Usuario;")
     print(cursor.rownumber)
     rows = cursor.fetchall()
-    return render_template("index.html",rows = rows,rol = "")
+    return render_template("index.html",rows = rows,rol = rol,alias=alias)
 
 @app.route("/login")
 def login():
@@ -182,6 +182,13 @@ def addForo():
     cursor.callproc('addForo',(idTema,idUsuario,nombre,contenido,None))
     cursor.connection.commit()
     return '202'
+@app.route('/perfil')
+def perfil():
+    global alias
+    cursor.execute(f"select CONCAT(nombre,' ',apellido) AS Nombre, gradoAcademico, email, alias from Usuario where alias = BINARY '{alias}';")
+    res = cursor.fetchone()
+    return render_template('perfil.html', rol = rol, alias = alias, datosUsuario = res)
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5500)
