@@ -30,6 +30,10 @@ error = ''
 foroS = tuple()
 respuestas = list()
 # Funciones usadas con propositos de utilidad
+def getCorreo(alias):
+    cursor.execute(f"select email from Usuario where alias = BINARY '{alias}' ;")
+    res = cursor.fetchone()
+    return res[0]  
 def getidUsuario(alias):
     cursor.execute(f"select idUsuario from Usuario where alias = BINARY '{alias}' ;")
     res = cursor.fetchone()
@@ -97,12 +101,13 @@ def contacto():
 
 @app.route("/enviarMail", methods=['GET'])
 def enviarMail():
-    global alias
+    print("Método aún en proceso")
+    '''global alias
     contenido = request.args.get("mensaje")
-    correo = alias + "@ded.com"
+    correo = getCorreo(alias)
     msg  =  Message(contenido,sender = correo ,recipients = ["agarciadarce@gmail.com"])
-    mail.send(msg)
-    return "Mensaje Enviado"
+    mail.send(msg)'''
+    return render_template("index.html",rol= rol, alias = alias, mensaje = "Soporte ha recibido tu mensaje")
 
 @app.route("/inicioSesion", methods=['POST'])
 def inicioSesion():
