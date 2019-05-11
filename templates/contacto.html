@@ -8,7 +8,12 @@
             <label for="alias">Alias: </label>
         </div>
         <div class="form-group col col-md-3">
-            <input type="text" class="form-control" name="alias" id="alias" value="{{alias}}" disabled required>
+            {% if alias %}
+            <input type="text" class="form-control" name="alias" id="alias" value="{{alias}}" disabled required>                                    
+            {% else %}
+            <input type="text" class="form-control" name="alias" id="alias" value="noRegistrado" disabled required>                                    
+            {% endif %}
+            
         </div>
     </div>
     <div class="form-row m-3 justify-content-md-center">

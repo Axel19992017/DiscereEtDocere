@@ -4,6 +4,16 @@ Inicio
 {% endblock %}
 {% block main %}
 <h1>Discere et Docere</h1>
+{% if mensaje %}
+<div class="row justify-content-md-center m-3">
+    <div class="alert alert-info col-12" id="mensaje">
+        {{mensaje}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+            <span>&times;</span>
+        </button>
+    </div>
+</div>
+{% endif %}
 <div id="carruselInicio" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -37,14 +47,4 @@ Inicio
         <span class="sr-only">Siguiente</span>
     </a>
 </div>
-{% if mensaje %}
-<div class="row justify-content-md-center m-3">
-    <div class="alert alert-info col-12 col-md-6" id="mensaje">
-        {{mensaje}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
-            <span>&times;</span>
-        </button>
-    </div>
-</div>
-{% endif %}
 {% endblock %}
