@@ -63,7 +63,7 @@
                     <a href="/salir" class="navbar-nav">
                         <img src='{{ url_for('static', filename = 'img/salir.png')}}' width="30" height="30"
                             class="d-inline-block align-top mr-1">
-                        Salir (Entrado como {{alias}})
+                        Salir ({{alias}})
                     </a>
                 </li>
                 {% else %}
@@ -92,6 +92,45 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    <script src="https://bootswatch.com/4/sketchy/bootstrap.min.css"></script>
+
+<!-- Footer -->
+<footer class="page-footer font-small cyan darken-3">
+
+    <!-- Footer Elements -->
+    <div class="container">
+      <!-- Grid row-->
+      <div class="row justify-content-md-center">
+        <!-- Grid column -->
+        <div class="col-md-12 py-5">
+          <div class="mb-5 flex-center">
+  
+            <!-- Facebook -->
+            <a class="fb-ic" href="https://www.facebook.com/axel.elZurdo" target="_blank"><img src="{{ url_for('static', filename = 'img/facebook.svg')}}" width="50" height="50" alt="Facebook"></a>
+            <!-- Twitter -->
+            <a class="tw-ic" href="https://twitter.com/axeldarce" target="_blank"><img src="{{ url_for('static', filename = 'img/twitter.svg')}}" width="50" height="50" alt="Twitter"></a>
+            <!--Instagram-->
+            <a class="ins-ic" href="https://www.instagram.com/agarciadarce/" target="_blank"><img src="{{ url_for('static', filename = 'img/instagram.svg')}}" width="50" height="50" alt="Twitter"></a>
+            <!--Pinterest-->
+            <a class="pin-ic" href="https://www.pinterest.es/agarciadarce/" target="_blank"><img src="{{ url_for('static', filename = 'img/pinterest.svg')}}" width="50" height="50" alt="Twitter"></a>
+          </div>
+        </div>
+        <!-- Grid column -->
+  
+      </div>
+      <!-- Grid row-->
+  
+    </div>
+    <!-- Footer Elements -->
+  
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2018 Copyright:
+      <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+  
+  </footer>
+  <!-- Footer -->
 </body>
 
 </html>
