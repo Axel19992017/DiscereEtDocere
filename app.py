@@ -11,8 +11,6 @@ mail = Mail(app)
 """
     FALTA: AGREGAR ADMINISTRACIÓN
     MOSTRAR IMAGENES
-    AGREGAR INICIO
-    AGREGAR FORO
 """
 mysql = MySQL()
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'

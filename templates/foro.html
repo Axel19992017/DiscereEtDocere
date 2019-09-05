@@ -98,7 +98,10 @@
   //temas = [idUnidad, ideTema, tema. descripción]
   
   function cargarForos() {
+    //Axel LEeazzar Garcí Darce 
+
     var xmlHTTP = new XMLHttpRequest();
+
     var url = "/getForos?idTema=" + optionTemas.value + ""
     xmlHTTP.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
@@ -166,8 +169,10 @@
         option.value = temas[i][1]
         option.textContent = temas[i][2]
         optionTemas.appendChild(option)
+
       }
     }
+    
   }
   function agregarForo(){
 	if('{{alias}}' != '' && optionTemas.value != ''){
